@@ -116,6 +116,11 @@
     "position_ms":req.body.seek
   });
  });
+
+ app.get('/getAvailable', async (req, res) => {
+  const ava=await spotifyApi.getAvailableDevices();
+  res.send(ava)
+ })
  
  // Gets the state of the active player to check if song has ended or playing
  app.get('/getState', async (req, res)=> {
