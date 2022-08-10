@@ -98,7 +98,8 @@
  //Play the song , finds the active spotify player if device id not specified
  app.post('/playback',async (req, res) => {
    res.setHeader('Content-Type', 'application/json');
-   const play= await spotifyApi.play({"device_id":req.body.player},{
+   const play= await spotifyApi.play({
+      "device_id":req.body.player,
       "uris": req.body.song,
       "position_ms":0,
    }).then(function() {
