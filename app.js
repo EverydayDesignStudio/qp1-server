@@ -115,6 +115,9 @@
   res.setHeader('Content-Type', 'application/json');
   const seek= await spotifyApi.seek({
     "position_ms":req.body.seek
+  }).then(function(){
+    console.log("Seeked");
+    res.send();
   });
  });
 
