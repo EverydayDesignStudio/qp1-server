@@ -113,9 +113,8 @@
 
  app.post('/seek',async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  const seek= await spotifyApi.seek({
-    "position_ms":req.body.seek
-  }).then(function(){
+  const seek= await spotifyApi.seek(req.body.seek)
+  .then(function(){
     console.log("Seeked");
     res.send();
   });
