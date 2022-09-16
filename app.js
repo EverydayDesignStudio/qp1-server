@@ -133,7 +133,7 @@ app.get('/getState', async (req, res)=> {
     .then(function(data) {
       if(data.body.is_playing && data.body.item!=null)
       {
-        if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
+        if(wot==0 && data.body.progress_ms+2000>data.body.item.duration_ms)
         // if(data.body.progress_ms+2000>data.body.item.duration_ms)
         {
           wot=1;
