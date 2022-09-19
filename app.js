@@ -97,7 +97,6 @@ spotifyApi
         res.send(`Error getting Tokens: ${error}`);
       });
 
-      isAuthenticated=true;
       res.send("Connected with Spotify");
   });
 
@@ -111,6 +110,7 @@ spotifyApi
 //Play the song in the specified player associated with the device id 
 app.post('/playback',async (req, res) => {
   wot=0;
+  isAuthenticated=true;
   res.setHeader('Content-Type', 'application/json');
   const play= await spotifyApi.play({
      "device_id":req.body.player,
