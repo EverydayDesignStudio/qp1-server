@@ -41,6 +41,10 @@ var spotifyApi = new SpotifyWebApi({
 
 var access_token;
 var wot=0;
+var ended=false;
+var seekNo=0;
+var endID="";
+
 //Initialising the express server
 const app = express();
 app.use(bodyParser.json());
@@ -156,34 +160,34 @@ app.post('/seek',async (req, res) => {
 // })
 
 app.get('/getState', (req, res)=> {
-  setInterval(async () => {
-    const state=await spotifyApi.getMyCurrentPlaybackState()
-    .then(function(data) {
-      console.log(data.body.is_playing)
-      if(data.body.is_playing && data.body.item!=null)
-      {
-        var wot=0;
-        if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
-        {
-          wot=1;
-          console.log('Finished Playing: ' + data.body.item.name);
-          res.send({song:data.body.item.id,state:"ended", seek:data.body.progress_ms}); 
-        }
-        else
-        {
-          res.send({song:data.body.item.id,state:"playing", seek:data.body.progress_ms});
-        } 
-      }
-      else
-      {
-        res.send({song:null,state:"unknown", seek:0})
-      }
-    }, function(err) {
-      console.log('Something went wrong!', err);
-    });
-  },1000)
+  if(ended==true) {
+    res.send({song:endID,state:"ended",seek:seekNo})
+    ended=false;
+  }
+  else
+  {
+    res.send({song:null,state:"unknown", seek:0})
+  }
 })
  
+const stateCheck=setInterval(async () => {
+  const state=await spotifyApi.getMyCurrentPlaybackState()
+  .then(function(data) {
+    console.log(data.body.is_playing)
+    if(data.body.is_playing && data.body.item!=null)
+    {
+      endID=data.body.item.id;
+      seekNo=data.body.progress_ms
+      wot=0;
+      if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
+      {
+        wot=1;
+        console.log('Finished Playing: ' + data.body.item.name);
+        ended=true;
+      }
+    }
+  });
+},1000)
 
 //Gets the name of the song playing, just for the website
 // app.post('/getTrack', (req, res) => {
