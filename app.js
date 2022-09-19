@@ -127,14 +127,42 @@ app.post('/seek',async (req, res) => {
    res.send();
  });
 });
+
 // Gets the state of the active player to check if song has ended or playing
-app.get('/getState', async (req, res)=> {
+// app.get('/getState', async (req, res)=> {
+//     const state=await spotifyApi.getMyCurrentPlaybackState()
+//     .then(function(data) {
+//       if(data.body.is_playing && data.body.item!=null)
+//       {
+//         if(wot==0 && data.body.progress_ms+2000>data.body.item.duration_ms)
+//         // if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
+//         {
+//           wot=1;
+//           console.log('Finished Playing: ' + data.body.item.name);
+//           res.send({song:data.body.item.id,state:"ended", seek:data.body.progress_ms}); 
+//         }
+//         else
+//         {
+//           res.send({song:data.body.item.id,state:"playing", seek:data.body.progress_ms});
+//         } 
+//       }
+//       else
+//       {
+//         res.send({song:null,state:"unknown", seek:0})
+//       }
+//     }, function(err) {
+//       console.log('Something went wrong!', err);
+//     });
+// })
+
+app.get('/getState', (req, res)=> {
+  setInterval(async () => {
     const state=await spotifyApi.getMyCurrentPlaybackState()
     .then(function(data) {
       if(data.body.is_playing && data.body.item!=null)
       {
-        if(wot==0 && data.body.progress_ms+2000>data.body.item.duration_ms)
-        // if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
+        var wot=0;
+        if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
         {
           wot=1;
           console.log('Finished Playing: ' + data.body.item.name);
@@ -152,7 +180,9 @@ app.get('/getState', async (req, res)=> {
     }, function(err) {
       console.log('Something went wrong!', err);
     });
+  },1000)
 })
+ 
 
 //Gets the name of the song playing, just for the website
 // app.post('/getTrack', (req, res) => {
