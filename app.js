@@ -159,6 +159,7 @@ app.get('/getState', (req, res)=> {
   setInterval(async () => {
     const state=await spotifyApi.getMyCurrentPlaybackState()
     .then(function(data) {
+      console.log(data.body.is_playing)
       if(data.body.is_playing && data.body.item!=null)
       {
         var wot=0;
