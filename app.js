@@ -174,7 +174,7 @@ app.get('/getState', (req, res)=> {
   }
 })
  
-if(isAuthenticated)
+while (isAuthenticated)
 {
   const stateCheck=setInterval(async () => {
     const state=await spotifyApi.getMyCurrentPlaybackState()
