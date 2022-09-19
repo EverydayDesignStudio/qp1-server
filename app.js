@@ -44,6 +44,7 @@ var wot=0;
 var ended=false;
 var seekNo=0;
 var endID="";
+var isAuthenticated=false;
 
 //Initialising the express server
 const app = express();
@@ -96,6 +97,7 @@ spotifyApi
         res.send(`Error getting Tokens: ${error}`);
       });
 
+      isAuthenticated=true;
       res.send("Connected with Spotify");
   });
 
@@ -171,7 +173,7 @@ app.get('/getState', (req, res)=> {
   }
 })
  
-if(access_token!=null)
+if(isAuthenticated)
 {
   const stateCheck=setInterval(async () => {
     const state=await spotifyApi.getMyCurrentPlaybackState()
