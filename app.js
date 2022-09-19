@@ -110,7 +110,6 @@ spotifyApi
 //Play the song in the specified player associated with the device id 
 app.post('/playback',async (req, res) => {
   wot=0;
-  isAuthenticated=true;
   res.setHeader('Content-Type', 'application/json');
   const play= await spotifyApi.play({
      "device_id":req.body.player,
@@ -162,6 +161,7 @@ app.post('/seek',async (req, res) => {
 // })
 
 app.get('/getState', (req, res)=> {
+  isAuthenticated=true;
   if(ended==true) {
     console.log("Song has ended: ", endID);
     res.send({song:endID,state:"ended",seek:seekNo})
@@ -169,6 +169,7 @@ app.get('/getState', (req, res)=> {
   }
   else
   {
+    console.log(isAuthenticated);
     res.send({song:null,state:"unknown", seek:0})
   }
 })
