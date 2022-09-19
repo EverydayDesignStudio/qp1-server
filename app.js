@@ -169,7 +169,6 @@ app.get('/getState', (req, res)=> {
   }
   else
   {
-    console.log(isAuthenticated);
     res.send({song:null,state:"unknown", seek:0})
   }
 })
@@ -185,7 +184,6 @@ const stateCheck=setInterval(async () => {
         {
           endID=data.body.item.id;
           seekNo=data.body.progress_ms
-          console.log()
           console.log(data.body.progress_ms);
           console.log(data.body.item.duration_ms);
           if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
