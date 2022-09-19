@@ -161,6 +161,7 @@ app.post('/seek',async (req, res) => {
 
 app.get('/getState', (req, res)=> {
   if(ended==true) {
+    console.log("Song has ended: ", endID);
     res.send({song:endID,state:"ended",seek:seekNo})
     ended=false;
   }
@@ -181,7 +182,7 @@ if(access_token!=null)
         endID=data.body.item.id;
         seekNo=data.body.progress_ms
         wot=0;
-        if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
+        if(data.body.progress_ms+1000>data.body.item.duration_ms)
         {
           wot=1;
           console.log('Finished Playing: ' + data.body.item.name);
