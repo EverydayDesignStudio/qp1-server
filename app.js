@@ -174,27 +174,32 @@ app.get('/getState', (req, res)=> {
   }
 })
  
-while (isAuthenticated)
-{
-  const stateCheck=setInterval(async () => {
-    const state=await spotifyApi.getMyCurrentPlaybackState()
-    .then(function(data) {
-      console.log(data.body.is_playing)
-      if(data.body.is_playing && data.body.item!=null)
-      {
-        endID=data.body.item.id;
-        seekNo=data.body.progress_ms
-        wot=0;
-        if(data.body.progress_ms+1000>data.body.item.duration_ms)
+
+
+const stateCheck=setInterval(async () => {
+  console.log("Hello There");
+    if(isAuthenticated)
+    {
+      const state=await spotifyApi.getMyCurrentPlaybackState()
+      .then(function(data) {
+        if(data.body.is_playing && data.body.item!=null)
         {
-          wot=1;
-          console.log('Finished Playing: ' + data.body.item.name);
-          ended=true;
+          endID=data.body.item.id;
+          seekNo=data.body.progress_ms
+          wot=0;
+          console.log()
+          console.log(data.body.progress_ms);
+          console.log(data.body.item.duration_ms);
+          if(data.body.progress_ms+1000>data.body.item.duration_ms)
+          {
+            wot=1;
+            console.log('Finished Playing: ' + data.body.item.name);
+            ended=true;
+          }
         }
-      }
-    });
-  },1000)
-}
+      });
+    }
+},1000)
 
 
 //Gets the name of the song playing, just for the website
