@@ -177,7 +177,6 @@ app.get('/getState', (req, res)=> {
 
 
 const stateCheck=setInterval(async () => {
-  console.log("Hello There");
     if(isAuthenticated)
     {
       const state=await spotifyApi.getMyCurrentPlaybackState()
@@ -186,11 +185,10 @@ const stateCheck=setInterval(async () => {
         {
           endID=data.body.item.id;
           seekNo=data.body.progress_ms
-          wot=0;
           console.log()
           console.log(data.body.progress_ms);
           console.log(data.body.item.duration_ms);
-          if(data.body.progress_ms+1000>data.body.item.duration_ms)
+          if(wot==0 && data.body.progress_ms+1000>data.body.item.duration_ms)
           {
             wot=1;
             console.log('Finished Playing: ' + data.body.item.name);
