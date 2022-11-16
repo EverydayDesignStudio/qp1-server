@@ -169,7 +169,7 @@ app.get('/getState', (req, res)=> {
   }
   else
   {
-    res.send({song:null,state:"unknown", seek:0})
+    res.send({song:endID,state:"unknown", seek:seekNo})
   }
 })
  
