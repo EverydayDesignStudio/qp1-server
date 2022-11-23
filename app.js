@@ -36,7 +36,7 @@ const port = process.env.PORT || '5000';
 var spotifyApi = new SpotifyWebApi({
     clientId: '765cacd3b58f4f81a5a7b4efa4db02d2',
     clientSecret: 'cb0ddbd96ee64caaa3d0bf59777f6871',
-    redirectUri: 'https://qpo-server.herokuapp.com/callback'
+    redirectUri: 'https://qp1-spotify-server.herokuapp.com/callback'
 });
 
 var access_token;
